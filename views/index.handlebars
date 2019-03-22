@@ -5,13 +5,41 @@
     <h1 class="display-4">BBC News Scraper</h1>
 </div>
 
-<div>
     {{#each articles}}
-
-        <h3>{{title}}</h3>
-        <p>{{link}}</p>
-        <p>{{summary}}</p>
-        <button type="button" class="btn btn-outline-info btn-sm">Notes</button>
-
+            <div>
+                <h3>{{this.title}}</h3>
+                <p>{{this.link}}</p>
+                <p>{{this.summary}}</p>
+                <button type="button" class="btn btn-outline-info btn-sm" id="makeNotes" data-id="{{_id}}">Notes</button>
+            </div>
     {{/each}}
+
+{{!-- modal --}}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Title</label>
+                <input type="text" class="form-control" id="note-title">
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" id="message-text" data-id="{{_id}}"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button type="button" class="btn btn-info" id="savenote">Save</button>
+      </div>
+    </div>
+  </div>
 </div>
