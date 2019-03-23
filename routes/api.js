@@ -1,6 +1,7 @@
 const db = require("../models");
-const request = require("request");
+// const request = require("request");
 const cheerio = require("cheerio");
+const axios = require("axios");
 
 // let results = [];
 
@@ -38,7 +39,7 @@ module.exports = function(app) {
               });
           });
       
-          res.send("Scrape Complete");
+          res.render("scrape");
         });
       });
 
