@@ -2,6 +2,8 @@ const db = require("../models");
 // const request = require("request");
 const cheerio = require("cheerio");
 const axios = require("axios");
+// const logger = require("morgan");
+// const mongoose= require("mongoose");
 
 // let results = [];
 
@@ -16,20 +18,22 @@ module.exports = function(app) {
     app.get("/scrape", function(req, res) {
         axios.get("http://www.bbc.com/news/").then(function(response) {
           var $ = cheerio.load(response.data);
-      
-          $(".gs-c-promo-heading_title").each(function(i, element) {
+          $("div.gs-c-promo-body").each(function(i, element) {
             let result = {};
-      
             result.title = $(this)
-              .children("h3")
+              .find("h3")
               .text();
             result.link = $(this)
-              .children("a")
+              .find("a")
               .attr("href");
             result.summary = $(this)
-              .children("a")
-              .attr("p");
-      
+              .find("p")
+              .text();
+
+            // if (result.title && result.link && result.summary) {
+            //   result.push(result);
+            // }
+
             db.Article.create(result)
               .then(function(dbArticle) {
                 console.log(dbArticle);
