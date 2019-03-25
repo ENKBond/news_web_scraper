@@ -1,6 +1,8 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+// Set Handlebars.
+const exphbs = require("express-handlebars");
 
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -21,8 +23,6 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-// Set Handlebars.
-const exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

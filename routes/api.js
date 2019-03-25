@@ -1,11 +1,8 @@
 const db = require("../models");
-// const request = require("request");
 const cheerio = require("cheerio");
 const axios = require("axios");
-// const logger = require("morgan");
-// const mongoose= require("mongoose");
 
-// let results = [];
+let results = [];
 
 module.exports = function(app) {
 
@@ -30,9 +27,9 @@ module.exports = function(app) {
               .find("p")
               .text();
 
-            // if (result.title && result.link && result.summary) {
-            //   result.push(result);
-            // }
+            if (result.title && result.link && result.summary) {
+              results.push(result);
+            }
 
             db.Article.create(result)
               .then(function(dbArticle) {
@@ -42,17 +39,25 @@ module.exports = function(app) {
                 console.log(err);
               });
           });
+
+          // db.Article.find({})
+          //   .then(function(dbArticle) {
+          //     res.json(dbArticle);
+          //   })
+          //   .catch(function(err) {
+          //     res.json(err);
+          //   });
       
-          res.render("scrape");
+          res.render("scrape", {articles: results});
         });
       });
 
-      //get artilces from db
+      //get artilce from db
       app.get("/articles", function(req, res) {
         // TODO: Finish the route so it grabs all of the articles
         db.Article.find({})
           .then(function(dbArticle) {
-            res.json(dbArticle);
+            res.render("articles");
           })
           .catch(function(err) {
             res.json(err);

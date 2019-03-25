@@ -13,18 +13,22 @@
 </nav> 
 
 <div class="container">
-    <div class = "row">
+    <div class = "row" id="title-row">
+      <div "col-12">
         <h2>Scraped Articles</h2>
+        <br>
+      </div>
     </div>
    
-    <div class = "row">
+    <div class = "row" id="main-row">
         {{#each articles}}
-            <div class = "col-6">
-                <h3>{{this.title}}</h3>
-                <p>{{this.link}}</p>
+            <div class = "col-5 article-box">
+                <h4>{{this.title}}</h4>
+                <a href="{{this.link}}" target="_blank">
                 <p>{{this.summary}}</p>
-                <button type="button" class="btn btn-outline-info btn-sm" id="makeNotes" data-id="{{_id}}">Notes</button>
+                <button type="button" class="btn btn-warning btn-sm" id="makeNotes" data-id="{{_id}}">Notes</button>
             </div>
+            <br>
         {{/each}}
     </div>    
 
