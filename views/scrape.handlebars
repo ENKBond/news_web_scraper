@@ -13,8 +13,8 @@
 </nav> 
 
 <div class="container">
-    <div class = "row" id="title-row">
-      <div "col-12">
+    <div class = "row text-center align-items-center" id="title-row">
+      <div "col align-middle">
         <h2>Scraped Articles</h2>
         <br>
       </div>
@@ -24,9 +24,9 @@
         {{#each articles}}
             <div class = "col-5 article-box">
                 <h4>{{this.title}}</h4>
-                <a href="{{this.link}}" target="_blank">
+                <a href="{{this.link}}" target="_blank"></a>
                 <p>{{this.summary}}</p>
-                <button type="button" class="btn btn-warning btn-sm" id="makeNotes" data-id="{{_id}}">Notes</button>
+                <button type="button" class="btn btn-warning btn-sm" id="makeNotes" data-id="{{this.id}}">Notes</button>
             </div>
             <br>
         {{/each}}

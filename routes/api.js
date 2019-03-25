@@ -13,32 +13,40 @@ module.exports = function(app) {
 
     //GET route for scraping
     app.get("/scrape", function(req, res) {
-        axios.get("http://www.bbc.com/news/").then(function(response) {
-          var $ = cheerio.load(response.data);
-          $("div.gs-c-promo-body").each(function(i, element) {
-            let result = {};
-            result.title = $(this)
-              .find("h3")
-              .text();
-            result.link = $(this)
-              .find("a")
-              .attr("href");
-            result.summary = $(this)
-              .find("p")
-              .text();
-
-            if (result.title && result.link && result.summary) {
-              results.push(result);
-            }
-
-            db.Article.create(result)
-              .then(function(dbArticle) {
-                console.log(dbArticle);
-              })
-              .catch(function(err) {
-                console.log(err);
+      // let found;
+      // let titleArr = [];
+      //   db.Article.find({})
+      //     .then(function(dbArticle) {
+      //       for (let j=0; j<dbArticle; j++) {
+      //         titleArr.push(dbArticle[j].title)
+      //       }
+            axios.get("http://www.bbc.com/news/").then(function(response) {
+              var $ = cheerio.load(response.data);
+              $("div.gs-c-promo-body").each(function(i, element) {
+                let result = {};
+                result.title = $(this)
+                .find("h3")
+                .text();
+                result.link = $(this)
+                .find("a")
+                .attr("href");
+                result.summary = $(this)
+                .find("p")
+                .text();
+                
+                if (!found && result.title && result.link && result.summary) {
+                  results.push(result);
+                }
+                
+                db.Article.create(result)
+                .then(function(dbArticle) {
+                  console.log(dbArticle);
+                })
+                .catch(function(err) {
+                  console.log(err);
+                });
               });
-          });
+            });
 
           // db.Article.find({})
           //   .then(function(dbArticle) {
@@ -50,7 +58,7 @@ module.exports = function(app) {
       
           res.render("scrape", {articles: results});
         });
-      });
+      // });
 
       //get artilce from db
       app.get("/articles", function(req, res) {
@@ -69,14 +77,17 @@ module.exports = function(app) {
         db.Article.findOne({_id: req.params.id})
         .populate("note")
         .then(function(dbArticle) {
-            res.json(dbArticle);
+          console.log(dbArticle);
+          if(dbArticle) {
+            res.render("articles", {data: dbArticle});
+          }
       })
       .catch(function(err) {
         res.json(err);
       });
   });
 
-  //deleting articles from db
+  //deleting notes from db
 
     app.delete("/articles/:id", function(req, res) {
         db.Note.deleteOne({_id: req.params.id})

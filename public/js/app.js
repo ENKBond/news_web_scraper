@@ -1,3 +1,4 @@
+//go to scrape
 $(document).on("click", "#scrapeNews", function() {
   $.ajax({
     method: "GET",
@@ -6,60 +7,19 @@ $(document).on("click", "#scrapeNews", function() {
   window.location.replace("/scrape");
 });
 
-
-
-
-
-
-
-
-
-
-// // Grab the articles as a json
-// $.getJSON("/scrape", function(data) {
-//   // For each one
-//   for (var i = 0; i < data.length; i++) {
-//     // Display the apropos information on the page
-//     $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p>");
-//   }
-// });
-
-
-// Whenever someone clicks a makeNotes button
-$("#makeNotes").on("click", function() {
-  // Save the id from the p tag
-  var thisId = $(this).attr("data-id");
-  //display the modal
-
-  // Now make an ajax call for the Article
+//choose article, go to notes page
+$(document).on("click", "#makeNotes", function () {
+  var thisID = $(this).attr("data-id");
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId
+    url: "/articles/" + thisID
   })
-    // With that done, add the note information to the page
-    .then(function(data) {
-      console.log(data);
-      // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
-      // An input to enter a new title
-      $("#notes").append("<input id='note-title'>");
-      // A textarea to add a new note body
-      $("#notes").append("<textarea id='message-text'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
-
-      // If there's a note in the article
-      if (data.note) {
-        // Place the title of the note in the title input
-        $("#note-title").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#message-text").val(data.note.body);
-      }
-    });
+  window.location.replace("/articles/" + thisID);
 });
 
-// When you click the savenote button
-$(document).on("click", "#savenote", function() {
+
+// save new note
+$(document).on("click", "#saveNote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -69,15 +29,37 @@ $(document).on("click", "#savenote", function() {
     url: "/articles/" + thisId,
     data: {
       // Value taken from title input
-      title: $("#note-title").val(),
+      title: $("#noteTitle").val(),
       // Value taken from note textarea
-      body: $("#message-text").val()
+      body: $("#noteBody").val()
     }
   })
     // With that done
     .then(function(data) {
       // Log the response
       console.log(data);
+      window.location.replace("/articles/" + data._id);
     });
+    $("#noteTitle").val("");
+    $("#noteBody").val("");
+});
 
+//delete a note
+$(document).on("click", "#deleteNote", function() {
+  var thisId = $(this).attr("data-id");
+  $.ajax({
+    method: "DELETE",
+    url: "/articles/" + thisId
+  })
+  .then(function(data) {
+    // Log the response
+    console.log(data);
+    location.reload();
+  }); 
+});
+
+//cancel note, do not save
+$(document).on("click", "#cancelNote", function() {
+  $("#noteTitle").val("");
+  $("#noteBody").val("");
 });

@@ -3,7 +3,7 @@
 }
 
 h1 {
-    font-family: 'Alegreya', serif;
+    font-family: 'Comfortaa', cursive;
 }
 
 .article-box {
@@ -19,6 +19,7 @@ h1 {
 
 #main-row {
     text-align: center;
+    padding-left: 18%;
 }
 
 #makeNotes {
@@ -34,12 +35,16 @@ p {
     color: #848080;
 }
 
-#title-row {
-    padding: 3%;
-    align-content: center;
+div.text-center {
+    padding-left: 40%;
+    padding-top: 3%;
+    font-family: 'Comfortaa', cursive;
 }
 
-.no-gutters {
-    margin-left: 0;
-    margin-right: 0;
+.btn-warning {
+    background-color: coral;
+}
+
+h2 {
+    align-content: center;
 }
