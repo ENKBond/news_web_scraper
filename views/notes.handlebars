@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-danger">
+  <a class="navbar-brand" href="/">BBC News Scraper</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/scrape">Articles</a>
+      </li>
+    </ul>
+  </div>
+</nav> 
+
+<div class="container">
+    <div class = "row text-center align-items-center" id="title-row">
+      <div "col align-middle">
+        <h2>Notes</h2>
+        <br>
+      </div>
+    </div>
+   
+  <div class="row">
+    <div class="col-6">
+      <form>
+        <div>
+          <h4>{{data.title}}</h4>
+        </div>
+        <div class="form-group">
+          <label for="noteTitle">Title</label>
+          <input class="form-control" id="noteTitle" type="text">
+        </div>
+        <div class="form-group">
+          <label for="noteBody">Comment</label>
+          <textarea class="form-control" id="noteBody" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-info" id="saveNote">Submit</button>
+        <button type="button" class="btn btn-secondary" id="cancelNote">Cancel</button>
+      </form>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <h4 class="card-header">Previous Comments</h4>
+          <div class="card-body">
+
+            {{#if data.note}}
+              {{#each data.note}}
+                <hr>
+                  <h5 class="card-title">{{this.title}}</h5>
+                  <p>{{this.body}}</p>
+                  <button data-id={{this._id}} id="deleteNote" class="btn btn btn-danger " type="button" style="float:right">Delete</button>
+                <hr>
+              {{/each}}  
+
+              {{else}}
+              <h4>There are no comments yet on this article</h4>
+            {{/if}}
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

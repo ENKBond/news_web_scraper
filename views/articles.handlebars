@@ -8,9 +8,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/scrape">Articles</a>
-      </li>
     </ul>
   </div>
 </nav> 
@@ -18,51 +15,21 @@
 <div class="container">
     <div class = "row text-center align-items-center" id="title-row">
       <div "col align-middle">
-        <h2>Notes</h2>
+        <h2>Scraped Articles</h2>
         <br>
       </div>
     </div>
    
-  <div class="row">
-    <div class="col-6">
-      <form>
-        <div>
-          <h4>{{data.title}}</h4>
-        </div>
-        <div class="form-group">
-          <label for="noteTitle">Title</label>
-          <input class="form-control" id="noteTitle" type="text">
-        </div>
-        <div class="form-group">
-          <label for="noteBody">Comment</label>
-          <textarea class="form-control" id="noteBody" rows="5"></textarea>
-        </div>
-        <button type="submit" class="btn btn-info" id="saveNote">Submit</button>
-        <button type="button" class="btn btn-secondary" id="cancelNote">Cancel</button>
-      </form>
-    </div>
+    <div class = "row" id="main-row">
+        {{#each articles}}
+            <div class = "col-5 article-box">
+                <h4>{{this.title}}</h4>
+                <a href="{{this.link}}" target="_blank"></a>
+                <p>{{this.summary}}</p>
+                <button type="button" class="btn btn-warning btn-sm" id="makeNotes" data-id="{{this._id}}">Notes</button>
+            </div>
+            <br>
+        {{/each}}
+    </div>    
 
-    <div class="col-6">
-      <div class="card">
-        <h4 class="card-header">Previous Comments</h4>
-          <div class="card-body">
-
-            {{#if data.note}}
-              {{#each data.note}}
-                <hr>
-                  <h5 class="card-title">{{this.title}}</h5>
-                  <p>{{this.body}}</p>
-                  <button data-id={{this._id}} id="deleteNote" class="btn btn btn-danger " type="button" style="float:right">Delete</button>
-                <hr>
-              {{/each}}  
-
-              {{else}}
-              <h4>There are no comments yet on this article</h4>
-            {{/if}}
-          </div>
-      </div>
-    </div>
-
-  </div>
-
-</div>
+</div>    

@@ -7,14 +7,24 @@ $(document).on("click", "#scrapeNews", function() {
   window.location.replace("/scrape");
 });
 
+//go to articles
+$(document).on("click", "#getArticles", function() {
+  $.ajax({
+    method: "GET",
+    url: "/articles"
+  })
+  window.location.replace("/articles");
+});
+
 //choose article, go to notes page
 $(document).on("click", "#makeNotes", function () {
   var thisID = $(this).attr("data-id");
+  console.log(thisID);
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisID
+    url: "/notes/" + thisID
   })
-  window.location.replace("/articles/" + thisID);
+  window.location.replace("/notes/" + thisID);
 });
 
 
@@ -26,7 +36,7 @@ $(document).on("click", "#saveNote", function() {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
-    url: "/articles/" + thisId,
+    url: "/notes/" + thisId,
     data: {
       // Value taken from title input
       title: $("#noteTitle").val(),
@@ -38,7 +48,7 @@ $(document).on("click", "#saveNote", function() {
     .then(function(data) {
       // Log the response
       console.log(data);
-      window.location.replace("/articles/" + data._id);
+      window.location.replace("/notes/" + data._id);
     });
     $("#noteTitle").val("");
     $("#noteBody").val("");

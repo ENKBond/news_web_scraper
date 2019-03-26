@@ -1,9 +1,22 @@
 .jumbotron {
-    background-image: url("images/administration-articles-bank-261949.jpg");
+    background-image: url("../images/administration-articles-bank-261949.jpg");
 }
 
 h1 {
     font-family: 'Comfortaa', cursive;
+    padding-left: 30%;
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+a.btn-lg {
+    margin-left: 45%;
+}
+
+p.lead {
+    margin-left: 40%;
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .article-box {

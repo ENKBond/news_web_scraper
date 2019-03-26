@@ -12,30 +12,15 @@
   </div>
 </nav> 
 
-<div class="container">
-    <div class = "row text-center align-items-center" id="title-row">
-      <div "col align-middle">
-        <h2>Scraped Articles</h2>
-        <br>
-      </div>
+<div class="container">  
+  <div class="row">
+    <div class="col">
+      <h2>Scrape Complete</h2>
+      <br>
+      <button type="button" class="btn btn-danger btn-lg" id="getArticles">Get Articles</button>
     </div>
-   
-    <div class = "row" id="main-row">
-        {{#each articles}}
-            <div class = "col-5 article-box">
-                <h4>{{this.title}}</h4>
-                <a href="{{this.link}}" target="_blank"></a>
-                <p>{{this.summary}}</p>
-                <button type="button" class="btn btn-warning btn-sm" id="makeNotes" data-id="{{this.id}}">Notes</button>
-            </div>
-            <br>
-        {{/each}}
-    </div>    
-
-</div>    
-    
-    
-    
+  </div>   
+</div>  
     
     
 

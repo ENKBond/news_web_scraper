@@ -34,7 +34,7 @@ module.exports = function(app) {
                 .find("p")
                 .text();
                 
-                if (!found && result.title && result.link && result.summary) {
+                if (result.title && result.link && result.summary) {
                   results.push(result);
                 }
                 
@@ -56,7 +56,7 @@ module.exports = function(app) {
           //     res.json(err);
           //   });
       
-          res.render("scrape", {articles: results});
+          res.render("scrape");
         });
       // });
 
@@ -65,7 +65,7 @@ module.exports = function(app) {
         // TODO: Finish the route so it grabs all of the articles
         db.Article.find({})
           .then(function(dbArticle) {
-            res.render("articles");
+            res.render("articles", {articles: dbArticle});
           })
           .catch(function(err) {
             res.json(err);
@@ -73,13 +73,14 @@ module.exports = function(app) {
       });
 
       // Route for grabbing a specific Article by id, populate it with it's note
-    app.get("/articles/:id", function(req, res) {
+    app.get("/notes/:id", function(req, res) {
+      console.log(req.params.id);
         db.Article.findOne({_id: req.params.id})
         .populate("note")
         .then(function(dbArticle) {
           console.log(dbArticle);
           if(dbArticle) {
-            res.render("articles", {data: dbArticle});
+            res.render("notes", {data: dbArticle});
           }
       })
       .catch(function(err) {
@@ -89,7 +90,7 @@ module.exports = function(app) {
 
   //deleting notes from db
 
-    app.delete("/articles/:id", function(req, res) {
+    app.delete("/notes/:id", function(req, res) {
         db.Note.deleteOne({_id: req.params.id})
         .then(function(removed) {
             res.json(removed);
@@ -101,7 +102,7 @@ module.exports = function(app) {
 
     //saving or updating a note
 
-    app.post("/articles/:id", function(req, res) {
+    app.post("/notes/:id", function(req, res) {
         db.Note.create(req.body)
             .then(function(dbNote) {
                 db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {note: dbNote._id}}, {new: true})
