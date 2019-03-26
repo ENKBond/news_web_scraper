@@ -37,7 +37,7 @@
           <label for="noteBody">Comment</label>
           <textarea class="form-control" id="noteBody" rows="5"></textarea>
         </div>
-        <button type="submit" class="btn btn-info" id="saveNote">Submit</button>
+        <button type="submit" class="btn btn-info" id="saveNote" data-id="{{data._id}}">Submit</button>
         <button type="button" class="btn btn-secondary" id="cancelNote">Cancel</button>
       </form>
     </div>
@@ -49,11 +49,10 @@
 
             {{#if data.note}}
               {{#each data.note}}
-                <hr>
+                  <button data-id={{this._id}} id="deleteNote" class="btn btn btn-danger " style="float:right" type="button">Delete</button>
                   <h5 class="card-title">{{this.title}}</h5>
                   <p>{{this.body}}</p>
-                  <button data-id={{this._id}} id="deleteNote" class="btn btn btn-danger " type="button" style="float:right">Delete</button>
-                <hr>
+                  <hr>
               {{/each}}  
 
               {{else}}
